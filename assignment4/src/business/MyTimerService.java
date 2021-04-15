@@ -29,7 +29,7 @@ public class MyTimerService {
 		logger.info("@Timeout in programmitic timer at " + new java.util.Date());
 	}
 	
-	@Schedule(second="*/30", minute="*", hour="*", persistent=true)
+	@Schedule(second="*/10", minute="*", hour="*", persistent=true)
 	private void scheduleTimeout(final Timer t) {
 		logger.info("@Scheduled Timer triggered at " + new java.util.Date());
 	}
