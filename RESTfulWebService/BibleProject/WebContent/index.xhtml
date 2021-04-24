@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>	
+	<title><ui:insert name="pageTitle">Bible Tools</ui:insert></title>
+	<h:outputStylesheet library="css" name="stylesheet.css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<h:form>
+		<div class="header">
+		  <h1>Search by word:</h1>  
+		  	<label for="word">Word:</label>
+		  	<h:inputText name="word" value="#{bibleVerse.word}" />
+		  	<h:commandButton value="Search" action="#{controller.onWordSubmit(bibleVerse)}"/>
+		</div>
+		<div class="header">
+		  <h1>Search for verse:</h1>
+		  	<label for="book">Book:</label>
+		  	<h:inputText name="book" value="#{bibleVerse.book}" />
+		  	<label for="chapter">Chapter:</label>
+		  	<h:inputText name="chapter" value="#{bibleVerse.chapter}" />
+		  	<label for="verse">Verse:</label>
+		  	<h:inputText name="verse" value="#{bibleVerse.verse}" />
+		  	<h:commandButton value="Search" action="#{controller.onSubmit(bibleVerse)}"/>
+		</div>
+		<div class="header">
+		  <h1>Result:</h1>
+		  <h:message for="#{bibleVerse.text}"/>
+		</div>
+	</h:form>
+</h:body>
+</html>
