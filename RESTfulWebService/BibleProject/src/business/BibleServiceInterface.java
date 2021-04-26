@@ -12,4 +12,5 @@ public interface BibleServiceInterface {
 	public int wordNumberOccurences(String word);
 	public String getVerse(BibleVerse bv);
 	public List<BibleVerse> getVerses();
+	void insertBook(int book);
 }

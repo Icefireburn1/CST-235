@@ -1,5 +1,10 @@
 package controllers;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -28,6 +33,9 @@ public class FormController {
 		
 		timer.setTimer(10000);
 
+		getAllOrders();
+		insertOrder();
+		getAllOrders();
 		
 		FacesContext.getCurrentInstance().getAttributes().put("user", user);
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
@@ -52,5 +60,57 @@ public class FormController {
 	
 	public OrderBusinessInterface getService() {
 		return services;
+	}
+	
+	private void getAllOrders() {
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+			Statement statement = conn.createStatement();
+			String sql = "SELECT * FROM testapp.Orders";
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				int ID = rs.getInt("ID");
+				String PRODUCT_NAME = rs.getString("PRODUCT_NAME");
+				Float PRICE = rs.getFloat("PRICE");
+				System.out.println(ID + "# " + PRODUCT_NAME + " $" + PRICE);
+			}
+			rs.close();
+			System.out.println("Success!!");
+		} catch (SQLException e) {
+			System.out.println("Failure!!");
+			e.printStackTrace();
+		} finally {
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	
+	private void insertOrder() {
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+			Statement statement = conn.createStatement();
+			String sql = "INSERT INTO testapp.ORDERS(ORDER_NO, PRODUCT_NAME, PRICE, QUANTITY) VALUES('001122334455', 'This was inserted new', 25.00, 100)";
+			statement.executeQuery(sql);
+
+			System.out.println("Insert Success!!");
+		} catch (SQLException e) {
+			System.out.println("Insert Failure!!");
+			e.printStackTrace();
+		} finally {
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 	}
 }

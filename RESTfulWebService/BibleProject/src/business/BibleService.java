@@ -229,5 +229,29 @@ public class BibleService implements BibleServiceInterface {
         }
 		return null;
 	}
+	
+	@Override
+	public void insertBook(int book) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String dbURL = "jdbc:mysql://localhost:3306/bible_db?useSSL=false";
+		String username = "root";
+		String pword = "root";
+		
+        try {conn = DriverManager.getConnection(dbURL, username, pword);
+            stmt = conn.prepareStatement("INSERT INTO t_asv" +
+                    "  (id, b, c, v, t) VALUES " +
+                    " (?, ?, ?, ?, ?);");
+            stmt.setInt(1, 100);
+            stmt.setInt(2, book);
+            stmt.setInt(3, 100);
+            stmt.setInt(4, 100);
+            stmt.setString(5, "Test");
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+	}
 
 }
